@@ -66,3 +66,21 @@ func getData(names: [String], completion: @escaping (Result<[Card], Error>) -> V
         }.resume()
     }
 }
+
+getData(names: ["Opt", "Black Lotus"]) { result in
+    
+    switch result {
+    case .success(let cards):
+        let filteredCards = cards.filter { $0.name == "Opt" || $0.name == "Black Lotus" }
+        for card in filteredCards {
+            print("Имя карты: \(card.name)")
+            print("Тип: \(card.type)")
+            print("Мановая стоимость: \(card.manaCost ?? "Не указано")")
+            print("Название сета: \(card.setName)")
+            print("Редкость: \(card.rarity)")
+            print("--------")
+        }
+    case .failure(let error):
+        print("Ошибка: \(error.localizedDescription)")
+    }
+}
